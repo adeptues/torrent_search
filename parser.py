@@ -52,4 +52,3 @@ if __name__ == "__main__":
     parser = NyaaParser(html)
     print parser.parse()
     print str(len(parser.parse()))
-    
