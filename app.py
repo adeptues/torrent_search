@@ -10,6 +10,7 @@ from flask import request
 import requests
 import json
 from parser import NyaaParser, PirateParser
+import config
 app = Flask(__name__)
 
 @app.route("/")
@@ -56,7 +57,7 @@ def do_search(search_text,site_search):
         return results
             
 def search_nyaa(search_text):
-    url = 'http://www.nyaa.se/?page=search&cats=0_0&filter=0&term='+search_text
+    url = config.NYAA+'/?page=search&cats=0_0&filter=0&term='+search_text
     r = requests.get(url)
     html = r.text
     parser = NyaaParser(html)
@@ -66,13 +67,13 @@ def search_nyaa(search_text):
 
 def search_pirate(search_text):
     print "pirate search"
-    url = 'https://fastpiratebay.co.uk/s/?q='+search_text+'&page=0&orderby=99'
+    url = config.PIRATE_BAY+'/s/?q='+search_text+'&page=0&orderby=99'
     r = requests.get(url)
     html = r.text
     parser = PirateParser(html)
     entries = parser.parse()
     return entries
-    return search_text
+
 
 if __name__ == "__main__":
     app.run()
